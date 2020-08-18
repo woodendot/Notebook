@@ -38,4 +38,59 @@
 
 ### C++中四种cast转换  
 
+C++中四种类型转换是：static_cast，dynamic_cast，const_cast，reinterpret_cast。  
 
++ const_cast
+  用于将const变量转为非const
++ static_cast
+  用于各种隐式转换，比如非const转为const，void*转指针等，static_cast能用于多态向上转化，如果向下转能成功但是不安全。  
++ dynamic_cast
+  用于动态类型转换。只能用于含有虚函数的类，用于类层次的向上和向下转换，只能转指针或引用。向下转化时，如果是非法的指针返回NULL。  
+  向上转换：子类向基类的转换。  
+  向下转换：基类向子类的转换。
++ reinterpret_cast
+  什么都可以转换，比如int转指针，但是可能出问题。  
++ 为什么不用C的强制转换？
+  转换不够明确，不易检查。
+
+### 指针和引用的区别  
+
++ 指针友自己的一块空间，而引用只是一个别名。  
++ 使用sizeof查询指针的大小微商4，而引用则是被引用对象的大小。  
++ 指针可以被初始化为NULL，而引用必须被初始化且必须是一个已有对象的引用。  
++ 作为参数传递时，指针需要被解引用才可以对对象进行操作，而直接对引用的修改都会改变引用所指向的对象。  
++ 可以有const指针，但是没有const引用。  
++ 指针在使用过程中可以指向其他对象，但是引用只能是一个对象的引用。  
++ 指针可以有多级指针，而引用只有一级。  
++ 指针和引用使用++运算符的含义不一样。  
++ 如果返回动态内存分配的对象或者内存，必须使用指针，引用可能会引发内存泄漏。  
+  
+### 给定三角形ABC和一点P(x, y, z)，判断P点是否在ABC内
+
+```C++
+#define ABS_FLOAT_0 0.0001
+
+struct point_float{
+    float x;
+    float y;
+};
+
+//计算三角形面积
+float GetTraingleSquar(const point_float pt0, const point_float pt1, const point_float pt2){
+    point_float AB, BC;
+    AB.x = pt1.x-pt0.x;
+    AB.y = pt1.y-pt0.y;
+    BC.x = pt2.x-pt1.x;
+    BC.y = pt2.y-pt1.y;
+
+    return fabs(AB.x*BC.y - AB.y*BC.x) / 2.0f; 
+}
+
+//判定给定一点是否在三角形内或者边上
+bool InIntraingle(const point_float A, const point_float B, const point_float C, const point_float D){
+    float SABC, SAPB, SAPC, SBPC;
+    SABC = GetTraingleSquar(A, B, C);
+    SAPB = GetTraingleSquar(A, P, B);
+    SAPC = GetTraingleSquar(A, P, C);
+    SBPC = GetTraingleSquar(B, P, C);
+}
