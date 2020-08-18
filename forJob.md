@@ -93,4 +93,14 @@ bool InIntraingle(const point_float A, const point_float B, const point_float C,
     SAPB = GetTraingleSquar(A, P, B);
     SAPC = GetTraingleSquar(A, P, C);
     SBPC = GetTraingleSquar(B, P, C);
+
+    float SumSquar = SAPB + SAPC + SBPC;
+
+    if((SABC - SumSquar) > -ABS_FLOAT_0 && (SABC - SumSquar) < ABS_FLOAT_0>){
+        return true;
+    }
+    else return false;
 }
+```
+
+
