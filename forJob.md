@@ -83,7 +83,7 @@ float GetTraingleSquar(const point_float pt0, const point_float pt1, const point
     BC.x = pt2.x-pt1.x;
     BC.y = pt2.y-pt1.y;
 
-    return fabs(AB.x*BC.y - AB.y*BC.x) / 2.0f; 
+    return fabs(AB.x*BC.y - AB.y*BC.x) / 2.0f;
 }
 
 //判定给定一点是否在三角形内或者边上
@@ -105,3 +105,12 @@ bool InIntraingle(const point_float A, const point_float B, const point_float C,
 
 ### 野指针
 
+野指针就是指向一个已删除的对象或者未申请访问受限内存区域的指针。  
+
+### 智能指针的内存泄露如何解决
+
+为了解决循环引用导致的内存泄露，引用了weak_ptr弱指针，weak_ptr的构造函数不会修改引用计数的值，从而不会对的对象的内存进行管理。类似一个普通指针，但不指向引用计数的共享内存，但是可以检测到所管理的对象是否已经被释放，避免非法访问。  
+
+### 为什么析构函数必须是虚函数？C++默认的析构函数不是虚函数  
+
+将可能会被继承的父类的析构函数设置为虚函数，可以保证当我们new一个子类，然后使用基类指针指向该子类的对象，释放基类指针时可以释放掉子类的空间，防止内存的泄露。  
